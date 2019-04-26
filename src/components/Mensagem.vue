@@ -7,7 +7,7 @@
           md4
         >
           <v-text-field
-            v-model="firstname"
+            v-model="mensagem.nome"
             :rules="nameRules"
             :counter="10"
             label="First name"
@@ -20,7 +20,7 @@
           md4
         >
           <v-text-field
-            v-model="lastname"
+            v-model="mensagem.sobrenome"
             :rules="nameRules"
             :counter="10"
             label="Last name"
@@ -33,7 +33,7 @@
           md4
         >
           <v-text-field
-            v-model="email"
+            v-model="mensagem.email"
             :rules="emailRules"
             label="E-mail"
             required
@@ -47,6 +47,7 @@
           md12
         >
             <v-textarea
+            v-model="mensagem.conteudo"
             name="input-7-1"
             label="Mensagem"
             hint="Hint text"
@@ -68,19 +69,20 @@
     {
         components: {},
         data: () => ({
-            lstServicos: [],
+            mensagem: {},
         }),
         created: function() {
             this.AtualizaLista();
         },
         methods: {
-            EnviaMensagem(item){
-                var url = this.$url_api + "/Servico/DeleteAgendaServico";
+            EnviaMensagem(){
+                this.mensagem.usuario = "WEB";
+                var url = this.$url_api + "/Servico/EnviaMensagem";
 
                 axios({ 
                     method: "POST", 
                     "url": url, 
-                    "data": JSON.stringify(item), 
+                    "data": JSON.stringify(this.mensagem), 
                     "headers": { "content-type": "application/json" } 
                 }).then(result => 
                 {
